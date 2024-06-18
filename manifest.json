@@ -1,0 +1,27 @@
+{
+    "manifest_version": 2,
+    "name": "Base URL Retriever",
+    "version": "1.1",
+    "description": "Retrieve only the base URL without any additional referral information.",
+    "permissions": [
+      "contextMenus",
+      "activeTab",
+      "clipboardWrite"
+    ],
+    "background": {
+      "scripts": ["background.js"]
+    },
+    "icons": {
+      "48": "icon.png"
+    },
+    "commands": {
+      "copy-base-url": {
+        "suggested_key": {
+          "default": "Alt+Q",
+          "mac": "Alt+Q"
+        },
+        "description": "Copy the base URL"
+      }
+    }
+  }
+  
