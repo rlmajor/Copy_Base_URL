@@ -16,11 +16,11 @@ Before you begin, ensure you have the latest version of Firefox installed on you
 
 To install the Base URL Retriever using the about:debugging method, follow these steps:
 
-1. Download the latest version of the Base URL Retriever from the [Releases](https://github.com/your-username/base-url-retriever/releases) page.
+1. Download the latest version of the Base URL Retriever from the [Releases](https://github.com/rlmajor/Copy_Base_URL/releases) page and extract it locally.
 2. Open Firefox and navigate to `about:debugging`.
 3. Click on the `This Firefox` tab.
 4. Click on the `Load Temporary Add-on` button.
-5. Choose the downloaded file and follow the prompts to install.
+5. Choose the manifest.json in the directory you extracted and follow the prompts to install.
 
 ## Usage
 
