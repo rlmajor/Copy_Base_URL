@@ -8,8 +8,6 @@ Retrieve only the base URL without any additional referral information. This Fir
 - **Shortcut Key**: Use `Alt+Q` (both on Windows and Mac) to quickly copy the base URL of the current tab to your clipboard.
 - **Clipboard Support**: Automatically copies the base URL to your clipboard for easy sharing and pasting.
 
-## Getting Started
-
 ### Prerequisites
 
 Before you begin, ensure you have the latest version of Firefox installed on your computer.
