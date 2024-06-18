@@ -13,7 +13,7 @@ function getBaseURL(url) {
   // Function to copy the base URL to the clipboard
   function copyBaseURL(tab) {
     let baseURL = getBaseURL(tab.url);
-    // Use the clipboard API to copy the base URL to the clipboard 
+    // Use the clipboard API to copy the base URL to the clipboard
     navigator.clipboard.writeText(baseURL).then(() => {
       console.log('Base URL copied to clipboard:', baseURL);
     }).catch(err => {
