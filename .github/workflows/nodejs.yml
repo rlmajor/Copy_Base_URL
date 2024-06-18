@@ -16,11 +16,16 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - name: Generate unique cache key
+      id: cache-key
+      run: echo "::set-output name=date::$(date +%Y-%m-%d-%H-%M)"
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+        cache-dependency-path: 'package-lock.json'
+        cache-key: ${{ steps.cache-key.outputs.date }}-${{ hashFiles('**/package-lock.json') }}
     - name: Install dependencies
       run: npm ci
     - name: Make Jest executable if found
@@ -33,7 +38,8 @@ jobs:
         fi
     - name: Verify Jest installation
       run: npx jest --version
-    - name: List installed binaries
-      run: ls -la ./node_modules/.bin/
     - name: Run Jest tests
       run: npm test
+    - name: Cleanup
+      if: always()
+      run: echo "Cleanup actions if necessary"
