@@ -1,7 +1,7 @@
 // Function to extract the base URL from a given URL
 function getBaseURL(url) {
     let urlObj = new URL(url);
-    // Construct base URL including the path but excluding query and fragment
+    // Construct base URL including the path but excluding query and fragment 
     let baseURL = `${urlObj.protocol}//${urlObj.hostname}${urlObj.pathname}`;
     // Remove trailing slash for cleaner URL if necessary
     if (baseURL.endsWith('/')) {
