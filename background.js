@@ -21,7 +21,7 @@ function getBaseURL(url) {
     });
   }
   
-  // Create a context menu item for the page
+  // Create a context menu item for the page 
   browser.contextMenus.create({
     id: "copy-base-url",
     title: "Copy Base URL",
