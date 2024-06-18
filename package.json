@@ -4,7 +4,11 @@
   "scripts": {
     "test": "jest"
   },
+    "collectCoverage": {
+      "coverageDirectory": "coverage",
+      "coverageReporters": ["json", "lcov", "text", "clover"]
+  },
   "devDependencies": {
     "jest": "^27.0.0"
-  }
+       }
 }
