@@ -35,6 +35,8 @@ After installation, you can use the Base URL Retriever in two ways:
 ### After
 ![After copying with Copy Base URL](After.JPG)
 
+# Note: Active URL in address bar is not actually modified during usage. Only clipboard content. Image for illustration purposes only.
+
 ## Contributing
 
 Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
