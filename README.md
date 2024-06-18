@@ -29,6 +29,12 @@ After installation, you can use the Base URL Retriever in two ways:
 - **Right-click on the page** and select "Copy Base URL" from the context menu.
 - **Press `Alt+Q`** to copy the base URL of the current page to your clipboard.
 
+### Before
+![alt text](Before.JPG)
+
+### After
+![alt text](After.JPG)
+
 ## Contributing
 
 Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
