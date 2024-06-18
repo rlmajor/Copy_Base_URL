@@ -23,6 +23,8 @@ jobs:
         cache: 'npm'
     - name: Install dependencies
       run: npm ci
+    - name: Make Jest executable
+      run: chmod +x ./node_modules/.bin/jest
     - name: Verify Jest installation
       run: npx jest --version
     - name: List installed binaries
