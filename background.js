@@ -28,7 +28,7 @@ function getBaseURL(url) {
     contexts: ["all"]
   });
   
-  // Add a listener for the context menu item click
+  // Add a listener for the context menu item click 
   browser.contextMenus.onClicked.addListener((info, tab) => {
     if (info.menuItemId === "copy-base-url") {
       copyBaseURL(tab);
