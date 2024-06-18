@@ -46,4 +46,3 @@ Distributed under the CC0 License. See `LICENSE` for more information.
 ## Acknowledgements
 
 - [Mozilla WebExtensions API](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions)
-- [Shields.io](https://shields.io/) for README badges
