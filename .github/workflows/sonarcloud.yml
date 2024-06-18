@@ -32,6 +32,7 @@ jobs:
             -Dsonar.projectKey=rlmajor_Copy_Base_URL
             -Dsonar.organization=rlmajor
             -Dsonar.sources=.
+            -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
             # Uncomment and configure these if needed
             # -Dsonar.tests=src/test/java
             # -Dsonar.java.binaries=target/classes
