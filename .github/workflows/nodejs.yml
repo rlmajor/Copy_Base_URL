@@ -36,8 +36,6 @@ jobs:
         else
           echo "Jest not found"
         fi
-    - name: Verify Jest installation
-      run: npx jest --version
     - name: Run Jest tests
       run: npm test
     - name: Cleanup
