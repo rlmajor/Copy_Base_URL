@@ -1,6 +1,6 @@
 # Base URL Retriever
 
-Retrieve only the base URL without any additional referral information. This Firefox extension simplifies the process of copying the base part of a URL, excluding any paths, parameters, or referral information that may be attached. Ideal for sharing clean URLs or for personal use when you need just the domain part of a URL.
+Retrieve only the base URL without any additional referrer information. This Firefox extension simplifies the process of copying the base part of a URL, excluding any paths, parameters, or referrer information that may be attached. Ideal for sharing clean URLs or for personal use when you need just the domain part of a URL.
 
 ## Features
 

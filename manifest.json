@@ -2,7 +2,7 @@
     "manifest_version": 2,
     "name": "Base URL Retriever",
     "version": "1.1",
-    "description": "Retrieve only the base URL without any additional referral information.",
+    "description": "Retrieve only the base URL without any additional referrer information.",
     "permissions": [
       "contextMenus",
       "activeTab",
