@@ -16,14 +16,14 @@ jobs:
         node-version: [14.x]
 
     steps:
-          - uses: actions/checkout@v3
-          - name: Use Node.js ${{ matrix.node-version }}
-            uses: actions/setup-node@v3
-            with:
-              node-version: ${{ matrix.node-version }}
-          - name: Install dependencies
-            run: npm ci
-          - name: Make Jest executable
-            run: chmod +x ./node_modules/.bin/jest
-          - name: Run Jest tests
-            run: npm test
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: Install dependencies
+      run: npm ci
+    - name: List installed binaries
+      run: ls -la ./node_modules/.bin/
+    - name: Run Jest tests
+      run: npm test
