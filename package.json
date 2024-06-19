@@ -4,11 +4,17 @@
   "scripts": {
     "test": "jest --coverage"
   },
-    "collectCoverage": {
-      "coverageDirectory": "coverage",
-      "coverageReporters": ["json", "lcov", "text", "clover"]
+  "collectCoverage": {
+    "coverageDirectory": "coverage",
+    "coverageReporters": [
+      "json",
+      "lcov",
+      "text",
+      "clover"
+    ]
   },
   "devDependencies": {
-    "jest": "^27.0.0"
-       }
+    "jest": "^27.0.0",
+    "jest-sonar-reporter": "^2.0.0"
+  }
 }
