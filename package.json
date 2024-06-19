@@ -15,10 +15,16 @@
       "lcov",
       "text",
       "clover"
-    ]
+    ],
+    "testEnvironment": "jsdom"
   },
   "devDependencies": {
+    "@babel/core": "^7.24.7",
+    "@babel/preset-env": "^7.24.7",
     "jest": "^27.0.0",
     "jest-sonar-reporter": "^2.0.0"
+  },
+  "transform": {
+      "^.+\\.[t|j]sx?$": "babel-jest"
   }
 }
