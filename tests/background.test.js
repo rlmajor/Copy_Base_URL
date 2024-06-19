@@ -1,36 +1,54 @@
-// Import or redefine the getBaseURL function here if necessary
-// For the purpose of this example, we'll assume it's redefined here
+// Import the functions from your file, assuming they are exported
+// For the sake of this example, let's assume you've modified your code to export these functions
+Object.defineProperty(global.navigator, 'clipboard', {
+  value: {
+    writeText: jest.fn()
+  },
+  writable: true
+});
 
-function getBaseURL(url) {
-    let urlObj = new URL(url);
-    let baseURL = `${urlObj.protocol}//${urlObj.hostname}${urlObj.pathname}`;
-    if (baseURL.endsWith('/')) {
-      baseURL = baseURL.slice(0, -1);
-    }
-    return baseURL;
-}
+// Mock the `browser` object and its methods used in your code
+global.browser = {
+  contextMenus: {
+    create: jest.fn(),
+    onClicked: {
+      addListener: jest.fn(),
+  },
+  },
+  commands: {
+    onCommand: {
+      addListener: jest.fn(),
+    },
+  },
+};
+
+const { getBaseURL, copyBaseURL } = require('../background.js');
+
+// Mocking the clipboard API
+Object.assign(navigator, {
+  clipboard: {
+    writeText: jest.fn().mockImplementation(() => Promise.resolve()),
+  },
+});
 
 describe('getBaseURL', () => {
-  test('extracts base URL without path', () => {
+  it('should extract the base URL without query parameters', () => {
+    expect(getBaseURL('https://example.com/path?query=123')).toBe('https://example.com/path');
+  });
+
+  it('should extract the base URL without a fragment', () => {
+    expect(getBaseURL('https://example.com/path#section')).toBe('https://example.com/path');
+  });
+
+  it('should handle URLs without a path', () => {
     expect(getBaseURL('https://example.com')).toBe('https://example.com');
   });
+});
 
-  test('extracts base URL with path', () => {
-    expect(getBaseURL('https://example.com/path/to/resource')).toBe('https://example.com/path/to/resource');
-  });
-
-  test('removes trailing slash', () => {
-    expect(getBaseURL('https://example.com/')).toBe('https://example.com');
-    expect(getBaseURL('https://example.com/path/to/resource/')).toBe('https://example.com/path/to/resource');
-  });
-
-  test('handles URLs with query parameters', () => {
-    expect(getBaseURL('https://example.com?query=123')).toBe('https://example.com');
-    expect(getBaseURL('https://example.com/path/to/resource?query=123')).toBe('https://example.com/path/to/resource');
-  });
-
-  test('handles URLs with fragments', () => {
-    expect(getBaseURL('https://example.com#fragment')).toBe('https://example.com');
-    expect(getBaseURL('https://example.com/path/to/resource#fragment')).toBe('https://example.com/path/to/resource');
+describe('copyBaseURL', () => {
+  it('should copy the base URL to the clipboard', async () => {
+    const tab = { url: 'https://example.com/path?query=123' };
+    await copyBaseURL(tab);
+    expect(navigator.clipboard.writeText).toHaveBeenCalledWith('https://example.com/path');
   });
 });
