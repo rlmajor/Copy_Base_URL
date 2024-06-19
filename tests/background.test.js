@@ -7,7 +7,7 @@ Object.defineProperty(global.navigator, 'clipboard', {
   writable: true
 });
 
-// Mock the `browser` object and its methods used in your code
+// Mock the `browser` object and its methods used in your code 
 global.browser = {
   contextMenus: {
     create: jest.fn(),
