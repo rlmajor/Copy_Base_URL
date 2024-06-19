@@ -10,7 +10,7 @@ function getBaseURL(url) {
     return baseURL;
   }
   
-  // Function to copy the base URL to the clipboard 
+  // Function to copy the base URL to the clipboard quickly
   function copyBaseURL(tab) {
     let baseURL = getBaseURL(tab.url);
     // Use the clipboard API to copy the base URL to the clipboard
