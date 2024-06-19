@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">16.66% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/18</span>
+                <span class='fraction'>3/18</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">16.66% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/18</span>
+                <span class='fraction'>3/18</span>
             </div>
         
             
@@ -110,8 +110,7 @@
 <a name='L45'></a><a href='#L45'>45</a>
 <a name='L46'></a><a href='#L46'>46</a>
 <a name='L47'></a><a href='#L47'>47</a>
-<a name='L48'></a><a href='#L48'>48</a>
-<a name='L49'></a><a href='#L49'>49</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L48'></a><a href='#L48'>48</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -135,27 +134,26 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -169,10 +167,10 @@ function <span class="fstat-no" title="function not covered" >getBaseURL(</span>
 <span class="cstat-no" title="statement not covered" >      baseURL = baseURL.slice(0, -1);</span>
     }
 <span class="cstat-no" title="statement not covered" >    return baseURL;</span>
-  }
-  
-  // Function to copy the base URL to the clipboard quickly
-  function <span class="fstat-no" title="function not covered" >copyBaseURL(</span>tab) {
+}
+&nbsp;
+// Function to copy the base URL to the clipboard quickly
+function <span class="fstat-no" title="function not covered" >copyBaseURL(</span>tab) {
     let baseURL = <span class="cstat-no" title="statement not covered" >getBaseURL(tab.url);</span>
     // Use the clipboard API to copy the base URL to the clipboard
 <span class="cstat-no" title="statement not covered" >    navigator.clipboard.writeText(baseURL).then(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
@@ -180,41 +178,40 @@ function <span class="fstat-no" title="function not covered" >getBaseURL(</span>
     }).catch(<span class="fstat-no" title="function not covered" >er</span>r =&gt; {
 <span class="cstat-no" title="statement not covered" >      console.error('Failed to copy base URL:', err);</span>
     });
+}
+&nbsp;
+// Create a context menu item for the page
+browser.contextMenus.create({
+  id: "copy-base-url",
+  title: "Copy Base URL",
+  contexts: ["all"]
+});
+&nbsp;
+// Add a listener for the context menu item click 
+browser.contextMenus.onClicked.addListener(<span class="fstat-no" title="function not covered" >(i</span>nfo, tab) =&gt; {
+<span class="cstat-no" title="statement not covered" >  if (info.menuItemId === "copy-base-url") {</span>
+<span class="cstat-no" title="statement not covered" >    copyBaseURL(tab);</span>
   }
-  
-  // Create a context menu item for the page 
-<span class="cstat-no" title="statement not covered" >  browser.contextMenus.create({</span>
-    id: "copy-base-url",
-    title: "Copy Base URL",
-    contexts: ["all"]
-  });
-  
-  // Add a listener for the context menu item click 
-<span class="cstat-no" title="statement not covered" >  browser.contextMenus.onClicked.addListener(<span class="fstat-no" title="function not covered" >(i</span>nfo, tab) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    if (info.menuItemId === "copy-base-url") {</span>
-<span class="cstat-no" title="statement not covered" >      copyBaseURL(tab);</span>
-    }
-  });
-  
-  // Add a listener for the hotkey
-<span class="cstat-no" title="statement not covered" >  browser.commands.onCommand.addListener(<span class="fstat-no" title="function not covered" >(c</span>ommand) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    if (command === "copy-base-url") {</span>
-      // Get the currently active tab
-<span class="cstat-no" title="statement not covered" >      browser.tabs.query({ active: true, currentWindow: true }).then(<span class="fstat-no" title="function not covered" >(t</span>abs) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >        if (tabs.length &gt; 0) {</span>
-<span class="cstat-no" title="statement not covered" >          copyBaseURL(tabs[0]);</span>
-        }
-      });
-    }
-  });
-  </pre></td></tr></table></pre>
+});
+&nbsp;
+// Add a listener for the hotkey
+browser.commands.onCommand.addListener(<span class="fstat-no" title="function not covered" >(c</span>ommand) =&gt; {
+<span class="cstat-no" title="statement not covered" >  if (command === "copy-base-url") {</span>
+    // Get the currently active tab
+<span class="cstat-no" title="statement not covered" >    browser.tabs.query({ active: true, currentWindow: true }).then(<span class="fstat-no" title="function not covered" >(t</span>abs) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      if (tabs.length &gt; 0) {</span>
+<span class="cstat-no" title="statement not covered" >        copyBaseURL(tabs[0]);</span>
+      }
+    });
+  }
+});</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-06-19T02:29:59.642Z
+                at 2024-06-19T03:40:11.253Z
             </div>
         <script src="prettify.js"></script>
         <script>
