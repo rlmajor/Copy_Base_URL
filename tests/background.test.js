@@ -11,7 +11,8 @@ Object.defineProperty(global.navigator, 'clipboard', {
   writable: true,
 });
 
-global.browser = {
+// Mock the browser object and its APIs
+const mockBrowser = {
   contextMenus: {
     create: jest.fn(),
     onClicked: {
@@ -27,6 +28,9 @@ global.browser = {
     query: jest.fn(),
   },
 };
+
+// Assign the mock browser object to global scope to simulate browser APIs
+global.browser = mockBrowser;
 
 // Clear mocks before each test
 beforeEach(() => {
@@ -84,7 +88,7 @@ describe('Context Menu Creation', () => {
   it('should create a context menu item with correct properties', () => {
     // Call your function that creates context menu item here if applicable
     createContextMenu();
-    expect(browser.contextMenus.create).toHaveBeenCalledWith({
+    expect(mockBrowser.contextMenus.create).toHaveBeenCalledWith({
       id: "copy-base-url",
       title: "Copy Base URL",
       contexts: ["all"]
@@ -98,12 +102,12 @@ describe('Context Menu Click Listener', () => {
     const mockTab = { id: 1, url: 'https://example.com/path' };
 
     // Mock setup for onClicked listener
-    browser.contextMenus.onClicked.addListener.mockImplementationOnce((callback) => {
+    mockBrowser.contextMenus.onClicked.addListener.mockImplementationOnce((callback) => {
       callback({ menuItemId: "copy-base-url" }, mockTab);
     });
 
     // Trigger the click event
-    const onClickedCallback = browser.contextMenus.onClicked.addListener.mock.calls[0][0];
+    const onClickedCallback = mockBrowser.contextMenus.onClicked.addListener.mock.calls[0][0];
     onClickedCallback({ menuItemId: "copy-base-url" }, mockTab);
 
     expect(copyBaseURL).toHaveBeenCalledWith(mockTab);
@@ -114,15 +118,15 @@ describe('Context Menu Click Listener', () => {
 describe('Command Listener', () => {
   it('should call copyBaseURL with the active tab when the hotkey is pressed', async () => {
     const mockTabs = [{ id: 1, url: 'https://example.com/path' }];
-    browser.tabs.query.mockResolvedValueOnce(mockTabs);
+    mockBrowser.tabs.query.mockResolvedValueOnce(mockTabs);
 
     // Mock setup for onCommand listener
-    browser.commands.onCommand.addListener.mockImplementationOnce((callback) => {
+    mockBrowser.commands.onCommand.addListener.mockImplementationOnce((callback) => {
       callback("copy-base-url");
     });
 
     // Trigger the hotkey press event
-    await browser.commands.onCommand.addListener.mock.calls[0][0]("copy-base-url");
+    await mockBrowser.commands.onCommand.addListener.mock.calls[0][0]("copy-base-url");
 
     expect(copyBaseURL).toHaveBeenCalledWith(mockTabs[0]);
   });
