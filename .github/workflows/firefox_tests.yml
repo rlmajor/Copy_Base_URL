@@ -4,11 +4,11 @@ on: [push, pull_request]
 
 jobs:
   test-addon:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-        firefox-version: [68.0, 78.0, 88.0, latest]
+        firefox-version: ['68.0', '78.0', '88.0', 'latest']
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
@@ -21,10 +21,19 @@ jobs:
     - name: Install web-ext
       run: npm install --global web-ext
 
-    - name: Download Firefox
-      uses: andstor/firefox-downloader-action@v1
-      with:
-        version: ${{ matrix.firefox-version }}
+    - name: Download Firefox (Linux/macOS)
+      if: runner.os != 'Windows'
+      run: |
+        wget -O firefox.tar.bz2 "https://download.mozilla.org/?product=firefox-${{ matrix.firefox-version }}-ssl&os=linux64&lang=en-US"
+        tar xjf firefox.tar.bz2
+        echo "FIREFOX_BIN=$PWD/firefox/firefox" >> $GITHUB_ENV
+
+    - name: Download Firefox (Windows)
+      if: runner.os == 'Windows'
+      run: |
+        Invoke-WebRequest -Uri "https://download.mozilla.org/?product=firefox-${{ matrix.firefox-version }}-ssl&os=win64&lang=en-US" -OutFile firefox-installer.exe
+        Start-Process firefox-installer.exe -ArgumentList '/S' -Wait
+        echo "FIREFOX_BIN=C:/Program Files/Mozilla Firefox/firefox.exe" >> $GITHUB_ENV
 
     - name: Run tests
-      run: web-ext run --firefox=$HOME/firefox/${{ matrix.firefox-version }}/firefox --source-dir . --verbose --headless
+      run: web-ext run --firefox=$FIREFOX_BIN --source-dir . --verbose --headless
