@@ -13,5 +13,5 @@ global.browser = {
     tabs: {
       query: jest.fn(),
     },
-    // Add other browser API mocks as needed
+    // Add other browser API mocks as needed 
   };
