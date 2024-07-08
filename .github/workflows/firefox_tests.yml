@@ -27,6 +27,7 @@ jobs:
         wget -O firefox.tar.bz2 "https://download.mozilla.org/?product=firefox-${{ matrix.firefox-version }}-ssl&os=linux64&lang=en-US"
         tar xjf firefox.tar.bz2
         echo "FIREFOX_BIN=$PWD/firefox/firefox" >> $GITHUB_ENV
+        ls -l $PWD/firefox
 
     - name: Download Firefox (Windows)
       if: runner.os == 'Windows'
@@ -34,6 +35,11 @@ jobs:
         Invoke-WebRequest -Uri "https://download.mozilla.org/?product=firefox-${{ matrix.firefox-version }}-ssl&os=win64&lang=en-US" -OutFile firefox-installer.exe
         Start-Process firefox-installer.exe -ArgumentList '/S' -Wait
         echo "FIREFOX_BIN=C:/Program Files/Mozilla Firefox/firefox.exe" >> $GITHUB_ENV
+        dir "C:/Program Files/Mozilla Firefox/"
+
+    - name: Confirm Firefox binary path
+      run: echo $FIREFOX_BIN
 
     - name: Run tests
-      run: web-ext run --firefox=$FIREFOX_BIN --source-dir . --verbose 
+      run: web-ext run --firefox=$FIREFOX_BIN --source-dir . --start-url about:blank --verbose --headless
+
