@@ -42,7 +42,7 @@ describe('copyBaseURL', () => {
     } catch (error) {
       // Expect an error to have been thrown
       expect(error).toBeDefined();
-      expect(error.message).toBe('Failed to copy ');
+      expect(error.message).toBe('Failed to copy');
     }
 
     // Verify that console.error was called with the expected error
