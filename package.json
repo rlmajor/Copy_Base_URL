@@ -5,6 +5,7 @@
     "build": "jest --coverage --verbose"
   },
   "jest": {
+    "setupFiles": ["jest.setup.js"],
     "collectCoverage": true,
     "collectCoverageFrom": [
       "*.{js,jsx,ts,tsx}"
