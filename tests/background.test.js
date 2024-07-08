@@ -1,16 +1,6 @@
 // Import necessary functions from background.js
 const { getBaseURL, copyBaseURL, createContextMenu } = require('../background.js');
 
-// Mock navigator.clipboard.writeText and browser APIs used in background.js
-Object.defineProperty(global.navigator, 'clipboard', {
-  value: {
-    writeText: jest.fn().mockImplementation(() => {
-      throw new Error('Failed to copy');
-    }),
-  },
-  writable: true,
-});
-
 // Mock the browser object and its APIs
 const mockBrowser = {
   contextMenus: {
