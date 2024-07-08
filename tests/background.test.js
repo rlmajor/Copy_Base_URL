@@ -88,6 +88,7 @@ describe('Context Menu Click Listener', () => {
     const mockTab = { id: 1, url: 'https://example.com/path' };
     const onClickedCallback = browser.contextMenus.onClicked.addListener.mock.calls[0][0];
 
+    // Simulate clicking the context menu item
     onClickedCallback({ menuItemId: "copy-base-url" }, mockTab);
 
     expect(copyBaseURL).toHaveBeenCalledWith(mockTab);
