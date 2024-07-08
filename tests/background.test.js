@@ -50,7 +50,6 @@ describe('copyBaseURL', () => {
     expect(consoleSpy).toHaveBeenCalledWith('Failed to copy base URL:', expect.any(Error));
     consoleSpy.mockRestore();
   });
-});
 
 // Tests for getBaseURL function
 describe('getBaseURL', () => {
