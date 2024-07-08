@@ -1,45 +1,17 @@
-name: Test Add-on
-
-on: [push, pull_request]
-
+on: [push]
 jobs:
-  test-addon:
-    runs-on: ${{ matrix.os }}
+  build:
+    runs-on: ubuntu-latest
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
-        firefox-version: ['68.0', '78.0', '88.0', 'latest']
+        firefox: [ '84.0', 'devedition-84.0b1', 'latest-beta', 'latest-devedition', 'latest-nightly', 'latest-esr', 'latest' ]
+    name: Firefox ${{ matrix.firefox }} sample
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Set up Node.js
-      uses: actions/setup-node@v1
-      with:
-        node-version: '18'
-
-    - name: Install web-ext
-      run: npm install --global web-ext
-
-    - name: Download Firefox (Linux/macOS)
-      if: runner.os != 'Windows'
-      run: |
-        wget -O firefox.tar.bz2 "https://download.mozilla.org/?product=firefox-${{ matrix.firefox-version }}-ssl&os=linux64&lang=en-US"
-        tar xjf firefox.tar.bz2
-        echo "FIREFOX_BIN=$PWD/firefox/firefox" >> $GITHUB_ENV
-        ls -l $PWD/firefox
-
-    - name: Download Firefox (Windows)
-      if: runner.os == 'Windows'
-      run: |
-        Invoke-WebRequest -Uri "https://download.mozilla.org/?product=firefox-${{ matrix.firefox-version }}-ssl&os=win64&lang=en-US" -OutFile firefox-installer.exe
-        Start-Process firefox-installer.exe -ArgumentList '/S' -Wait
-        echo "FIREFOX_BIN=C:/Program Files/Mozilla Firefox/firefox.exe" >> $GITHUB_ENV
-        dir "C:/Program Files/Mozilla Firefox/"
-
-    - name: Confirm Firefox binary path
-      run: echo $FIREFOX_BIN
-
-    - name: Run tests
-      run: web-ext run --firefox=$FIREFOX_BIN --source-dir . --start-url about:blank --verbose 
-
+      - name: Setup firefox
+        id: setup-firefox
+        uses: browser-actions/setup-firefox@v1
+        with:
+          firefox-version: ${{ matrix.firefox }}
+      - run: |
+          echo Installed firefox versions: ${{ steps.setup-firefox.outputs.firefox-version }}
+          ${{ steps.setup-firefox.outputs.firefox-path }} --version
