@@ -41,5 +41,5 @@ jobs:
       run: echo $FIREFOX_BIN
 
     - name: Run tests
-      run: web-ext run --firefox=$FIREFOX_BIN --source-dir . --start-url about:blank --verbose --headless
+      run: web-ext run --firefox=$FIREFOX_BIN --source-dir . --start-url about:blank --verbose 
 
