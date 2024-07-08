@@ -1,3 +1,6 @@
+// Import necessary functions from background.js
+const { getBaseURL, copyBaseURL, createContextMenu } = require('../background.js');
+
 // Mock navigator.clipboard.writeText and browser APIs used in background.js
 Object.defineProperty(global.navigator, 'clipboard', {
   value: {
@@ -24,8 +27,6 @@ global.browser = {
     query: jest.fn(),
   },
 };
-
-const { getBaseURL, copyBaseURL, createContextMenu } = require('../background.js');
 
 // Clear mocks before each test
 beforeEach(() => {
@@ -96,7 +97,12 @@ describe('Context Menu Click Listener', () => {
   it('should call copyBaseURL when context menu item is clicked', () => {
     const mockTab = { id: 1, url: 'https://example.com/path' };
 
-    // Simulate clicking the context menu item
+    // Mock setup for onClicked listener
+    browser.contextMenus.onClicked.addListener.mockImplementationOnce((callback) => {
+      callback({ menuItemId: "copy-base-url" }, mockTab);
+    });
+
+    // Trigger the click event
     const onClickedCallback = browser.contextMenus.onClicked.addListener.mock.calls[0][0];
     onClickedCallback({ menuItemId: "copy-base-url" }, mockTab);
 
@@ -108,10 +114,15 @@ describe('Context Menu Click Listener', () => {
 describe('Command Listener', () => {
   it('should call copyBaseURL with the active tab when the hotkey is pressed', async () => {
     const mockTabs = [{ id: 1, url: 'https://example.com/path' }];
-    browser.tabs.query.mockResolvedValue(mockTabs);
+    browser.tabs.query.mockResolvedValueOnce(mockTabs);
 
-    const onCommandCallback = browser.commands.onCommand.addListener.mock.calls[0][0];
-    await onCommandCallback("copy-base-url");
+    // Mock setup for onCommand listener
+    browser.commands.onCommand.addListener.mockImplementationOnce((callback) => {
+      callback("copy-base-url");
+    });
+
+    // Trigger the hotkey press event
+    await browser.commands.onCommand.addListener.mock.calls[0][0]("copy-base-url");
 
     expect(copyBaseURL).toHaveBeenCalledWith(mockTabs[0]);
   });
