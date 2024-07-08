@@ -1,7 +1,7 @@
 // Mock navigator.clipboard.writeText and browser APIs used in background.js
 Object.defineProperty(global.navigator, 'clipboard', {
   value: {
-    writeText: jest.fn().mockResolvedValue(true),
+    writeText: jest.fn().mockResolvedValue(true), // Mock resolved value for success case
   },
   writable: true,
 });
@@ -74,6 +74,7 @@ describe('getBaseURL', () => {
 // Tests for context menu creation
 describe('Context Menu Creation', () => {
   it('should create a context menu item with correct properties', () => {
+    // Call your function that creates context menu item here if applicable
     expect(browser.contextMenus.create).toHaveBeenCalledWith({
       id: "copy-base-url",
       title: "Copy Base URL",
@@ -86,9 +87,9 @@ describe('Context Menu Creation', () => {
 describe('Context Menu Click Listener', () => {
   it('should call copyBaseURL when context menu item is clicked', () => {
     const mockTab = { id: 1, url: 'https://example.com/path' };
-    const onClickedCallback = browser.contextMenus.onClicked.addListener.mock.calls[0][0];
 
     // Simulate clicking the context menu item
+    const onClickedCallback = browser.contextMenus.onClicked.addListener.mock.calls[0][0];
     onClickedCallback({ menuItemId: "copy-base-url" }, mockTab);
 
     expect(copyBaseURL).toHaveBeenCalledWith(mockTab);
