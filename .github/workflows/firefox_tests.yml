@@ -1,0 +1,30 @@
+name: Test Add-on
+
+on: [push, pull_request]
+
+jobs:
+  test-addon:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        firefox-version: [68.0, 78.0, 88.0, latest]
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: '14'
+
+    - name: Install web-ext
+      run: npm install --global web-ext
+
+    - name: Download Firefox
+      uses: andstor/firefox-downloader-action@v1
+      with:
+        version: ${{ matrix.firefox-version }}
+
+    - name: Run tests
+      run: web-ext run --firefox=$HOME/firefox/${{ matrix.firefox-version }}/firefox --source-dir . --verbose --headless

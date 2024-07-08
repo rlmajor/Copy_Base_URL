@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1718769066873" clover="3.2.0">
-  <project timestamp="1718769066873" name="All files">
-    <metrics statements="21" coveredstatements="14" conditionals="8" coveredconditionals="2" methods="7" coveredmethods="3" elements="36" coveredelements="19" complexity="0" loc="21" ncloc="21" packages="1" files="2" classes="2"/>
+<coverage generated="1718774122027" clover="3.2.0">
+  <project timestamp="1718774122028" name="All files">
+    <metrics statements="21" coveredstatements="11" conditionals="8" coveredconditionals="2" methods="7" coveredmethods="1" elements="36" coveredelements="14" complexity="0" loc="21" ncloc="21" packages="1" files="2" classes="2"/>
     <file name="background.js" path="C:\Users\rober\projects\javascript\Copy_Base_URL\Copy_Base_URL\background.js">
-      <metrics statements="21" coveredstatements="14" conditionals="8" coveredconditionals="2" methods="7" coveredmethods="3"/>
+      <metrics statements="21" coveredstatements="11" conditionals="8" coveredconditionals="2" methods="7" coveredmethods="1"/>
       <line num="2" count="1" type="stmt"/>
       <line num="3" count="4" type="stmt"/>
       <line num="5" count="4" type="stmt"/>
       <line num="7" count="4" type="cond" truecount="2" falsecount="0"/>
-      <line num="8" count="1" type="stmt"/>
+      <line num="8" count="2" type="stmt"/>
       <line num="10" count="4" type="stmt"/>
       <line num="14" count="1" type="stmt"/>
-      <line num="15" count="1" type="stmt"/>
-      <line num="17" count="1" type="stmt"/>
-      <line num="18" count="1" type="stmt"/>
+      <line num="15" count="0" type="stmt"/>
+      <line num="17" count="0" type="stmt"/>
+      <line num="18" count="0" type="stmt"/>
       <line num="20" count="0" type="stmt"/>
       <line num="25" count="1" type="stmt"/>
       <line num="32" count="1" type="stmt"/>
