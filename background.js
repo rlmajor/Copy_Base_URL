@@ -43,8 +43,9 @@ browser.commands.onCommand.addListener((command) => {
       }
     });
   }
+});
 
-  // In your background.js or similar 
+// Define createContextMenu function outside of any other function to ensure it is in the correct scope
 function createContextMenu() {
   browser.contextMenus.create({
     id: "copy-base-url",
@@ -53,6 +54,5 @@ function createContextMenu() {
   });
 }
 
-});
-
+// Correctly export the functions
 module.exports = { getBaseURL, copyBaseURL, createContextMenu };
