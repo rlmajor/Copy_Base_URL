@@ -13,7 +13,3 @@ global.browser = {
     },
     // Add other browser API mocks as needed
   };
-
-  module.exports = {
-    setupFiles: ["jest.setup.js"],
-  };
