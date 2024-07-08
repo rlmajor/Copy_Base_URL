@@ -36,4 +36,4 @@ jobs:
         echo "FIREFOX_BIN=C:/Program Files/Mozilla Firefox/firefox.exe" >> $GITHUB_ENV
 
     - name: Run tests
-      run: web-ext run --firefox=$FIREFOX_BIN --source-dir . --verbose
+      run: web-ext run --firefox=$FIREFOX_BIN --source-dir . --verbose 
