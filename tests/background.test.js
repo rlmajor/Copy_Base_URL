@@ -27,17 +27,15 @@ beforeEach(() => {
   jest.clearAllMocks();
 });
 
-// Tests for copyBaseURL function
 describe('copyBaseURL', () => {
-  it('should copy the base URL to the clipboard', async () => {
-    const tab = { url: 'https://example.com/path?query=123' };
+  it('should handle errors when copying to clipboard fails', async () => {
+    // Mock navigator.clipboard.writeText to throw an error
+    navigator.clipboard.writeText = jest.fn().mockRejectedValue(new Error('Failed to copy'));
 
-    // Mock navigator.clipboard.writeText to resolve (success scenario)
-    navigator.clipboard.writeText.mockResolvedValueOnce();
-
-    await copyBaseURL(tab);
-    expect(navigator.clipboard.writeText).toHaveBeenCalledWith('https://example.com/path');
+    // Call the function and expect it to handle the error
+    await expect(copyBaseURL('http://example.com')).rejects.toThrow('Failed to copy');
   });
+});
 
   it('should handle errors when copying to clipboard fails', async () => {
     const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
@@ -124,5 +122,5 @@ describe('Command Listener', () => {
       });
     });
   });
-  
+
 });

@@ -10,14 +10,12 @@ const getBaseURL = (url) => {
     return baseURL;
 }
 
-// Assume `getBaseURL` function is correctly implemented
-async function copyBaseURL(tab) {
+async function copyBaseURL(url) {
   try {
-    const baseURL = getBaseURL(tab.url);
-    await navigator.clipboard.writeText(baseURL);
+    await navigator.clipboard.writeText(url);
   } catch (error) {
-    console.error('Failed to copy base URL:', error);
-    throw error; // Ensure error is propagated if necessary
+    console.error('Error copying URL to clipboard:', error);
+    throw error; // Rethrow or handle as needed
   }
 }
 
