@@ -10,15 +10,15 @@ const getBaseURL = (url) => {
     return baseURL;
 }
 
-// Function to copy the base URL to the clipboard quickly
-const copyBaseURL = (tab) => {
-    let baseURL = getBaseURL(tab.url);
-    // Use the clipboard API to copy the base URL to the clipboard!
-    navigator.clipboard.writeText(baseURL).then(() => {
-      console.log('Base URL copied to clipboard:', baseURL);
-    }).catch(err => {
-      console.error('Failed to copy base URL:', err);
-    });
+// Assume `getBaseURL` function is correctly implemented
+async function copyBaseURL(tab) {
+  try {
+    const baseURL = getBaseURL(tab.url);
+    await navigator.clipboard.writeText(baseURL);
+  } catch (error) {
+    console.error('Failed to copy base URL:', error);
+    throw error; // Ensure error is propagated if necessary
+  }
 }
 
 // Create a context menu item for the page
