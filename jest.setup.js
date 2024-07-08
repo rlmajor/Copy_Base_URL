@@ -1,7 +1,9 @@
-// jest.setup.js
 global.browser = {
     contextMenus: {
       create: jest.fn(),
+      onClicked: {
+        addListener: jest.fn(),
+      },
     },
     commands: {
       onCommand: {
