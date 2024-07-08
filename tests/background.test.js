@@ -1,7 +1,9 @@
 // Mock navigator.clipboard.writeText and browser APIs used in background.js
 Object.defineProperty(global.navigator, 'clipboard', {
   value: {
-    writeText: jest.fn().mockResolvedValue(true), // Mock resolved value for success case
+    writeText: jest.fn().mockImplementation(() => {
+      throw new Error('Failed to copy');
+    }),
   },
   writable: true,
 });
@@ -23,20 +25,21 @@ global.browser = {
   },
 };
 
-const { getBaseURL, copyBaseURL } = require('../background.js');
+const { getBaseURL, copyBaseURL, createContextMenu } = require('../background.js');
 
 // Clear mocks before each test
 beforeEach(() => {
   jest.clearAllMocks();
-
-  // Mock navigator.clipboard.writeText to reject
-  navigator.clipboard.writeText.mockRejectedValue(new Error('Failed to copy'));
 });
 
 // Tests for copyBaseURL function
 describe('copyBaseURL', () => {
   it('should copy the base URL to the clipboard', async () => {
     const tab = { url: 'https://example.com/path?query=123' };
+
+    // Mock navigator.clipboard.writeText to resolve (success scenario)
+    navigator.clipboard.writeText.mockResolvedValueOnce();
+
     await copyBaseURL(tab);
     expect(navigator.clipboard.writeText).toHaveBeenCalledWith('https://example.com/path');
   });
@@ -45,6 +48,10 @@ describe('copyBaseURL', () => {
     const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
 
     const tab = { url: 'https://example.com/path?query=123' };
+
+    // Mock navigator.clipboard.writeText to reject (error scenario)
+    navigator.clipboard.writeText.mockRejectedValueOnce(new Error('Failed to copy'));
+
     await copyBaseURL(tab);
 
     expect(consoleSpy).toHaveBeenCalledWith('Failed to copy base URL:', expect.any(Error));
@@ -75,6 +82,7 @@ describe('getBaseURL', () => {
 describe('Context Menu Creation', () => {
   it('should create a context menu item with correct properties', () => {
     // Call your function that creates context menu item here if applicable
+    createContextMenu();
     expect(browser.contextMenus.create).toHaveBeenCalledWith({
       id: "copy-base-url",
       title: "Copy Base URL",
