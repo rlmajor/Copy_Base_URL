@@ -44,7 +44,7 @@ browser.commands.onCommand.addListener((command) => {
     });
   }
 
-  // In your background.js or similar file
+  // In your background.js or similar 
 function createContextMenu() {
   browser.contextMenus.create({
     id: "copy-base-url",
@@ -55,4 +55,4 @@ function createContextMenu() {
 
 });
 
-module.exports = { getBaseURL, copyBaseURL };
+module.exports = { getBaseURL, copyBaseURL, createContextMenu };
