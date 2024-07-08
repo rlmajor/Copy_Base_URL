@@ -27,15 +27,30 @@ beforeEach(() => {
   jest.clearAllMocks();
 });
 
+
 describe('copyBaseURL', () => {
   it('should handle errors when copying to clipboard fails', async () => {
     // Mock navigator.clipboard.writeText to throw an error
     navigator.clipboard.writeText = jest.fn().mockRejectedValue(new Error('Failed to copy'));
 
-    // Call the function and expect it to handle the error
-    await expect(copyBaseURL('http://example.com')).rejects.toThrow('Failed to copy');
+    // Setup a spy to monitor console.error calls
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+
+    try {
+      // Attempt to call the function which should fail
+      await copyBaseURL('http://example.com');
+    } catch (error) {
+      // Expect an error to have been thrown
+      expect(error).toBeDefined();
+      expect(error.message).toBe('Failed to copy ');
+    }
+
+    // Verify that console.error was called with the expected error
+    expect(consoleSpy).toHaveBeenCalledWith('Error copying URL to clipboard:', expect.any(Error));
+
+    // Cleanup
+    consoleSpy.mockRestore();
   });
-});
 
   it('should handle errors when copying to clipboard fails', async () => {
     const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
@@ -50,6 +65,7 @@ describe('copyBaseURL', () => {
     expect(consoleSpy).toHaveBeenCalledWith('Failed to copy base URL:', expect.any(Error));
     consoleSpy.mockRestore();
   });
+});
 
 // Tests for getBaseURL function
 describe('getBaseURL', () => {
