@@ -104,18 +104,19 @@ it('should call copyBaseURL when context menu item is clicked', () => {
   });
 });
 
-// Tests for command listener (hotkey)
 describe('Command Listener', () => {
+  beforeEach(() => {
+    // Mock setup for addListener
+    mockBrowser.commands.onCommand.addListener = jest.fn();
+    
+    // Additional setup that might trigger the addListener call
+  });
+
   it('should call copyBaseURL with the active tab when the hotkey is pressed', async () => {
-    const mockTabs = [{ id: 1, url: 'https://example.com/path' }];
-    mockBrowser.tabs.query.mockResolvedValueOnce(mockTabs);
-
-    // Mock setup for onCommand listener
-    mockBrowser.commands.onCommand.addListener.mockImplementationOnce((callback) => {
-      callback("copy-base-url");
-    });
-
-    // Trigger the hotkey press event
+    // Setup or trigger the condition that would lead to addListener being called
+    
+    // Now manually trigger the listener as if the hotkey was pressed
+    // Ensure this line is after any code that would result in the mock function being called
     await mockBrowser.commands.onCommand.addListener.mock.calls[0][0]("copy-base-url");
 
     expect(copyBaseURL).toHaveBeenCalledWith(mockTabs[0]);
