@@ -36,7 +36,7 @@ jobs:
           echo Installed Firefox version: ${{ steps.setup-firefox.outputs.firefox-version }}
           ${{ steps.setup-firefox.outputs.firefox-path }} --version
       
-      - name: Run Playwright tests in Firefox
+      - name: Run Playwright tests in Firefox 
         run: npx playwright test --project=firefox
         env:
           FIREFOX_EXECUTABLE_PATH: ${{ steps.setup-firefox.outputs.firefox-path }}
