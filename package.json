@@ -5,7 +5,9 @@
     "test": "jest --coverage --verbose"
   },
   "jest": {
-    "setupFiles": ["./jest.setup.js"],
+    "setupFiles": [
+      "./jest.setup.js"
+    ],
     "collectCoverage": true,
     "collectCoverageFrom": [
       "*.{js,jsx,ts,tsx}"
@@ -26,6 +28,6 @@
     "jest-sonar-reporter": "^2.0.0"
   },
   "transform": {
-      "^.+\\.[t|j]sx?$": "babel-jest"
+    "^.+\\.[t|j]sx?$": "babel-jest"
   }
 }
