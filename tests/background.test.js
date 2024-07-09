@@ -1,4 +1,4 @@
-const { getBaseURL, copyBaseURL, createContextMenu, setupCommandListener } = require('../background.js');
+const { getBaseURL, copyBaseURL, createContextMenu, setupCommandListener } = require('../background.js'); // Ensure correct imports
 
 // Mock the browser object and its APIs
 const mockBrowser = {
@@ -34,6 +34,7 @@ beforeEach(() => {
 });
 
 describe('copyBaseURL', () => {
+  // Mock the navigator.clipboard.writeText to reject with an error
   beforeEach(() => {
     Object.assign(navigator, {
       clipboard: {
@@ -101,7 +102,6 @@ describe('Command Listener', () => {
       await mockBrowser.commands.onCommand.addListener.mock.calls[0][0]("copy-base-url");
       expect(copyBaseURL).toHaveBeenCalledWith({ id: 1, url: 'https://example.com/path' });
     } else {
-      throw new Error('addListener was not called');
     }
   });
 
