@@ -27,6 +27,14 @@ beforeEach(() => {
   jest.clearAllMocks();
 });
 
+beforeEach(() => {
+  // Mock the clipboard API
+  Object.assign(navigator, {
+    clipboard: {
+      writeText: jest.fn().mockRejectedValueOnce(new Error('Failed to copy')),
+    },
+  });
+});
 
 describe('copyBaseURL', () => {
   it('should handle errors when copying to clipboard fails', async () => {
