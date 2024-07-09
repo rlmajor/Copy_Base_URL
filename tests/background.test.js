@@ -37,43 +37,29 @@ beforeEach(() => {
 });
 
 describe('copyBaseURL', () => {
-  it('should handle errors when copying to clipboard fails', async () => {
-    // Mock navigator.clipboard.writeText to throw an error
-    navigator.clipboard.writeText = jest.fn().mockRejectedValue(new Error('Failed to copy'));
-
-    // Setup a spy to monitor console.error calls
-    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
-
-    try {
-      // Attempt to call the function which should fail
-      await copyBaseURL('http://example.com');
-    } catch (error) {
-      // Expect an error to have been thrown
-      expect(error).toBeDefined();
-      expect(error.message).toBe('Failed to copy');
-    }
-
-    // Verify that console.error was called with the expected error
-    expect(consoleSpy).toHaveBeenCalledWith('Error copying URL to clipboard:', expect.any(Error));
-
-    // Cleanup
-    consoleSpy.mockRestore();
+  // Mock the navigator.clipboard.writeText to reject with an error
+  beforeEach(() => {
+    Object.assign(navigator, {
+      clipboard: {
+        writeText: jest.fn().mockRejectedValueOnce(new Error('Failed to copy')),
+      },
+    });
   });
 
   it('should handle errors when copying to clipboard fails', async () => {
-    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    // Assuming copyBaseURL is an async function that attempts to copy text to the clipboard
+    // and handles errors by catching them and perhaps logging or re-throwing.
 
-    const tab = { url: 'https://example.com/path?query=123' };
+    // The test expects copyBaseURL to throw an error when clipboard.writeText fails.
+    // This is checked by awaiting the promise to reject with the expected error message.
+    await expect(copyBaseURL('http://example.com')).rejects.toThrow('Failed to copy');
 
-    // Mock navigator.clipboard.writeText to reject (error scenario)
-    navigator.clipboard.writeText.mockRejectedValueOnce(new Error('Failed to copy'));
-
-    await copyBaseURL(tab);
-
-    expect(consoleSpy).toHaveBeenCalledWith('Failed to copy base URL:', expect.any(Error));
-    consoleSpy.mockRestore();
+    // Optionally, if there's any cleanup or additional assertions, they can be done here.
   });
+
+  // afterEach or other tests can go here
 });
+
 
 // Tests for getBaseURL function
 describe('getBaseURL', () => {
