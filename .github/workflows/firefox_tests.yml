@@ -31,10 +31,10 @@ jobs:
         with:
           firefox-version: ${{ matrix.firefox }}
 
-      - name: Verify Firefox installation
-        run: |
-          echo Installed Firefox version: ${{ steps.setup-firefox.outputs.firefox-version }}
-          ${{ steps.setup-firefox.outputs.firefox-path }} --version
+      - name: Run Selenium tests
+        run: npm run selenium-test
+        env:
+           FIREFOX_PATH: ${{ steps.setup-firefox.outputs.firefox-path }}
       
 
       
