@@ -22,7 +22,7 @@ To install the Base URL Retriever using the about:debugging method, follow these
 4. Click on the `Load Temporary Add-on` button.
 5. Choose the manifest.json in the directory you extracted and follow the prompts to install.
 
-## Usage
+## Usage  
 
 After installation, you can use the Base URL Retriever in two ways:
 
