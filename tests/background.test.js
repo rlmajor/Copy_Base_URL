@@ -28,21 +28,30 @@ beforeEach(() => {
 });
 
 beforeEach(() => {
-  describe('copyBaseURL', () => {
-    beforeEach(() => {
-      // Setup the clipboard writeText mock to reject
-      Object.assign(navigator, {
-        clipboard: {
-          writeText: jest.fn().mockRejectedValueOnce(new Error('Failed to copy')),
-        },
-      });
-    });
-  
-    it('should handle errors when copying to clipboard fails', async () => {
-      // Assuming copyBaseURL is an async function that uses navigator.clipboard.writeText
-      // and is supposed to throw an error when the clipboard operation fails.
-      await expect(copyBaseURL('http://example.com')).rejects.toThrow('Failed to copy');
-    });
+  // Mock the clipboard API
+  Object.assign(navigator, {
+    clipboard: {
+      writeText: jest.fn().mockRejectedValueOnce(new Error('Failed to copy')),
+    },
+  });
+});
+
+describe('copyBaseURL', () => {
+  it('should handle errors when copying to clipboard fails', async () => {
+    // Mock navigator.clipboard.writeText to throw an error
+    navigator.clipboard.writeText = jest.fn().mockRejectedValue(new Error('Failed to copy'));
+
+    // Setup a spy to monitor console.error calls
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+
+    try {
+      // Attempt to call the function which should fail
+      await copyBaseURL('http://example.com');
+    } catch (error) {
+      // Expect an error to have been thrown
+      expect(error).toBeDefined();
+      expect(error.message).toBe('Failed to copy');
+    }
 
     // Verify that console.error was called with the expected error
     expect(consoleSpy).toHaveBeenCalledWith('Error copying URL to clipboard:', expect.any(Error));
