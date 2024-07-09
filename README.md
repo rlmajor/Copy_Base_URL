@@ -49,8 +49,8 @@ Contributions are what make the open-source community such an amazing place to l
 
 ## License
 
-Distributed under the CC0 License. See `LICENSE` for more information.
+Distributed under the CC0 License. See `LICENSE` for more information. 
 
-## Acknowledgements 
+## Acknowledgements
 
 - [Mozilla WebExtensions API](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions)

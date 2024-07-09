@@ -10,15 +10,13 @@ const getBaseURL = (url) => {
     return baseURL;
 }
 
-// Function to copy the base URL to the clipboard quickly
-const copyBaseURL = (tab) => {
-    let baseURL = getBaseURL(tab.url);
-    // Use the clipboard API to copy the base URL to the clipboard!
-    navigator.clipboard.writeText(baseURL).then(() => {
-      console.log('Base URL copied to clipboard:', baseURL);
-    }).catch(err => {
-      console.error('Failed to copy base URL:', err);
-    });
+async function copyBaseURL(url) {
+  try {
+    await navigator.clipboard.writeText(url);
+  } catch (error) {
+    console.error('Error copying URL to clipboard:', error);
+    throw error; // Rethrow or handle as needed
+  }
 }
 
 // Create a context menu item for the page
@@ -47,4 +45,14 @@ browser.commands.onCommand.addListener((command) => {
   }
 });
 
-module.exports = { getBaseURL, copyBaseURL };
+// Define createContextMenu function outside of any other function to ensure it is in the correct scope
+function createContextMenu() {
+  browser.contextMenus.create({
+    id: "copy-base-url",
+    title: "Copy Base URL",
+    contexts: ["all"],
+  });
+}
+
+// Correctly export the functions
+module.exports = { getBaseURL, copyBaseURL, createContextMenu };
