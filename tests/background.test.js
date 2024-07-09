@@ -24,7 +24,7 @@ global.browser = mockBrowser;
 
 // Clear mocks before each test
 beforeEach(() => {
-  jest.clearAllMocks();
+  mockBrowser.commands.onCommand.addListener.mockReset();
 });
 
 beforeEach(() => {
