@@ -14,7 +14,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '17' # Adjust this to your project's Node.js version
+          node-version: '17' 
 
       - name: Install dependencies
         run: npm install
@@ -35,3 +35,9 @@ jobs:
         run: |
           echo Installed Firefox version: ${{ steps.setup-firefox.outputs.firefox-version }}
           ${{ steps.setup-firefox.outputs.firefox-path }} --version
+      
+      - name: Run Playwright tests in Firefox
+        run: npx playwright test --project=firefox
+        env:
+          FIREFOX_EXECUTABLE_PATH: ${{ steps.setup-firefox.outputs.firefox-path }}
+      
