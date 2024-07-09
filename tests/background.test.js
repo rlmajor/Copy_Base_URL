@@ -94,7 +94,6 @@ describe('Command Listener', () => {
     mockBrowser.tabs.query = jest.fn().mockResolvedValue([{ id: 1, url: 'https://example.com/path' }]);
     
     // Initialize the command listener setup
-    setupCommandListener(); // Ensure this function sets up the listener
   });
 
   it('should call copyBaseURL with the active tab when the hotkey is pressed', async () => {
