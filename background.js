@@ -54,5 +54,37 @@ function createContextMenu() {
   });
 }
 
-// Correctly export the functions
-module.exports = { getBaseURL, copyBaseURL, createContextMenu };
+function getBaseURL(url) {
+  // Implementation of getBaseURL
+}
+
+async function copyBaseURL(tab) {
+  // Implementation of copyBaseURL
+}
+
+function createContextMenu() {
+  browser.contextMenus.create({
+    id: "copy-base-url",
+    title: "Copy Base URL",
+    contexts: ["all"],
+  });
+}
+
+function setupCommandListener() {
+  browser.commands.onCommand.addListener(async (command) => {
+    if (command === "copy-base-url") {
+      const tabs = await browser.tabs.query({ active: true, currentWindow: true });
+      if (tabs[0]) {
+        await copyBaseURL(tabs[0]);
+      }
+    }
+  });
+}
+
+// Export the functions for testing
+module.exports = {
+  getBaseURL,
+  copyBaseURL,
+  createContextMenu,
+  setupCommandListener,
+};

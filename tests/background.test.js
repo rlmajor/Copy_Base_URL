@@ -1,4 +1,4 @@
-const { getBaseURL, copyBaseURL, createContextMenu, setupCommandListener } = require('../background.js'); // Ensure correct imports
+const { getBaseURL, copyBaseURL, createContextMenu, setupCommandListener } = require('../background.js');
 
 // Mock the browser object and its APIs
 const mockBrowser = {
@@ -34,7 +34,6 @@ beforeEach(() => {
 });
 
 describe('copyBaseURL', () => {
-  // Mock the navigator.clipboard.writeText to reject with an error
   beforeEach(() => {
     Object.assign(navigator, {
       clipboard: {
