@@ -88,7 +88,7 @@ describe('Context Menu Click Listener', () => {
 });
 
 describe('Command Listener', () => {
-  beforeEach(() => {
+  beforeAll(() => {
     jest.clearAllMocks();
     mockBrowser.commands.onCommand.addListener = jest.fn();
     mockBrowser.tabs.query = jest.fn().mockResolvedValue([{ id: 1, url: 'https://example.com/path' }]);
