@@ -31,11 +31,18 @@ jobs:
         with:
           firefox-version: ${{ matrix.firefox }}
 
-      - name: Verify Firefox installation
+      - name: Setup geckodriver
         run: |
-          echo Installed Firefox version: ${{ steps.setup-firefox.outputs.firefox-version }}
-          ${{ steps.setup-firefox.outputs.firefox-path }} --version
+          wget https://github.com/mozilla/geckodriver/releases/download/v0.29.0/geckodriver-v0.29.0-linux64.tar.gz
+          tar -xzf geckodriver-v0.29.0-linux64.tar.gz
+          sudo mv geckodriver /usr/local/bin/
+
+      - name: Run Selenium tests
+        run: npm run selenium-test
+        env:
+           FIREFOX_PATH: ${{ steps.setup-firefox.outputs.firefox-path }}
       
 
       
+
 
