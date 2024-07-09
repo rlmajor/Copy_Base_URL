@@ -22,9 +22,6 @@ jobs:
       - name: Set Jest Permissions
         run: chmod +x ./node_modules/.bin/jest
 
-      - name: Build the project
-        run: npm run build # Make sure your package.json has a "build" script
-
       - name: Run tests
         run: npm test # Make sure your package.json has a "test" script
 
