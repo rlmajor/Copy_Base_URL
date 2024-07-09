@@ -36,6 +36,9 @@ jobs:
           echo Installed Firefox version: ${{ steps.setup-firefox.outputs.firefox-version }}
           ${{ steps.setup-firefox.outputs.firefox-path }} --version
       
+      - name: Ensure Playwright is executable
+        run: chmod +x ./node_modules/.bin/playwright
+      
       - name: Run Playwright tests in Firefox 
         run: npx playwright test --project=firefox
         env:
