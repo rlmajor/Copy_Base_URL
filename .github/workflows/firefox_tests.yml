@@ -41,7 +41,4 @@ jobs:
         run: npm run selenium-test
         env:
            FIREFOX_PATH: ${{ steps.setup-firefox.outputs.firefox-path }}
-      
-
-      
-
+     
