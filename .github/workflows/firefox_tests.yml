@@ -34,11 +34,11 @@ jobs:
           name: firefox-extension
           path: my_extension.xpi 
 
-      - name: Upload Extension Artifact
-        uses: actions/upload-artifact@v2
+      - name: Download Extension Artifact
+        uses: actions/download-artifact@v2
         with:
           name: firefox-extension
-          path: my_extension.xpi # Update this path
+          path: my_extension.xpi 
 
       - name: Set Jest Permissions
         run: chmod +x ./node_modules/.bin/jest
@@ -62,3 +62,4 @@ jobs:
         run: npm run selenium-test
         env:
            FIREFOX_PATH: ${{ steps.setup-firefox.outputs.firefox-path }}
+           XPI_PATH: ${{ github.workspace }}/my_extension.xpi
