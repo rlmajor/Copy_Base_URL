@@ -3,7 +3,8 @@
   "version": "1.1.0",
   "scripts": {
     "test": "jest --coverage --verbose",
-    "selenium-test": "node tests/selenium/selenium_test.js"
+    "selenium-test": "node tests/selenium/selenium_test.js",
+    "build": "webpack"
   },
   "jest": {
     "setupFiles": [
@@ -26,7 +27,9 @@
     "@babel/core": "^7.24.7",
     "@babel/preset-env": "^7.24.7",
     "jest": "^27.0.0",
-    "jest-sonar-reporter": "^2.0.0"
+    "jest-sonar-reporter": "^2.0.0",
+    "webpack": "^5.92.1",
+    "webpack-cli": "^5.1.4"
   },
   "transform": {
     "^.+\\.[t|j]sx?$": "babel-jest"
