@@ -19,6 +19,16 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      # If your extension needs to be built
+      - name: Build Extension
+        run: npm run build-extension # Replace with your actual build command
+
+      - name: Upload Extension Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: firefox-extension
+          path: path/to/my_extension.xpi # Update this path
+
       - name: Set Jest Permissions
         run: chmod +x ./node_modules/.bin/jest
 
@@ -36,9 +46,9 @@ jobs:
           wget https://github.com/mozilla/geckodriver/releases/download/v0.29.0/geckodriver-v0.29.0-linux64.tar.gz
           tar -xzf geckodriver-v0.29.0-linux64.tar.gz
           sudo mv geckodriver /usr/local/bin/
-
+          chmod +x /usr/local/bin/geckodriver
+      
       - name: Run Selenium tests
         run: npm run selenium-test
         env:
            FIREFOX_PATH: ${{ steps.setup-firefox.outputs.firefox-path }}
-     
