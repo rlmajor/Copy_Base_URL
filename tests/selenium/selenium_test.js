@@ -10,7 +10,7 @@ if (process.env.FIREFOX_PATH) {
 }
 
 let serviceBuilder = new firefox.ServiceBuilder('/usr/local/bin/geckodriver');
-.setStdio('inherit'); // This will print the geckodriver logs to the console.
+setStdio('inherit'); // This will print the geckodriver logs to the console.
 
 (async function example() {
   let driver = await new Builder().forBrowser('firefox').setFirefoxOptions(options).build();
