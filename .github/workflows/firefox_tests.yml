@@ -25,7 +25,7 @@ jobs:
 
       - name: Zip and rename bundle.js to bundle.xpi
         run: |
-          zip -r bundle.xpi ./dist/bundle.js
+          zip -r bundle.xpi ./dist/bundle.js ./dist/manifest.json
           mv bundle.xpi my_extension.xpi
 
       - name: Upload Extension Artifact
