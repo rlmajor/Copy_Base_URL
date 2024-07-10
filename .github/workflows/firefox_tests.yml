@@ -18,6 +18,10 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+      
+      # Generate manifest.json
+      - name: Generate manifest.json
+        run: node generate-manifest.js
 
       # If your extension needs to be built
       - name: Build addon
