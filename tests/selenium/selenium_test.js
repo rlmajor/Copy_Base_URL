@@ -6,6 +6,9 @@ if (process.env.FIREFOX_PATH) {
   options.setBinary(process.env.FIREFOX_PATH);
 }
 
+// Configure Firefox to run in headless mode
+options.addArguments("--headless");
+
 let serviceBuilder = new firefox.ServiceBuilder('/usr/local/bin/geckodriver')
   .setStdio('inherit'); // This will print the Geckodriver logs to the console.
 
