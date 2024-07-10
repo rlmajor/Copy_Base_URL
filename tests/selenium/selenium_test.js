@@ -7,10 +7,7 @@ if (process.env.FIREFOX_PATH) {
 }
 
 let serviceBuilder = new firefox.ServiceBuilder('/usr/local/bin/geckodriver')
-  .setStdio('inherit') // This will print the Geckodriver logs to the console.
-  .setLoggingTo('/path/to/geckodriver.log'); // Optionally, specify a file to log to.
-
-
+  .setStdio('inherit'); // This will print the Geckodriver logs to the console.
 
 console.log('Firefox Path:', process.env.FIREFOX_PATH);
 console.log('Geckodriver Path:', '/usr/local/bin/geckodriver');
