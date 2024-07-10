@@ -6,7 +6,12 @@ const manifest = {
   name: "My Firefox Extension",
   version: "1.0",
   description: "A sample Firefox extension.",
-  // Add other necessary fields here
+  applications: {
+    gecko: {
+      id: "your-addon-id@example.com", // Replace with your actual add-on ID
+      strict_min_version: "42.0"
+    }
+  }
 };
 
 const manifestPath = path.join(__dirname, 'dist', 'manifest.json');
