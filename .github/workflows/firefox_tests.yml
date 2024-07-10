@@ -20,8 +20,8 @@ jobs:
         run: npm install
 
       # If your extension needs to be built
-      - name: Build Extension
-        run: npm run build-extension # Replace with your actual build command
+      - name: Build addon
+        run: npm run build
 
       - name: Upload Extension Artifact
         uses: actions/upload-artifact@v2
