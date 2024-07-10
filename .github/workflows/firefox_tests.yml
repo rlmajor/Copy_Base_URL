@@ -34,11 +34,11 @@ jobs:
           name: firefox-extension
           path: my_extension.xpi 
 
-      - name: Download Extension Artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: firefox-extension
-          path: my_extension.xpi 
+      # - name: Download Extension Artifact
+      #   uses: actions/download-artifact@v2
+      #   with:
+      #     name: firefox-extension
+      #     path: my_extension.xpi 
 
       - name: Set Jest Permissions
         run: chmod +x ./node_modules/.bin/jest
