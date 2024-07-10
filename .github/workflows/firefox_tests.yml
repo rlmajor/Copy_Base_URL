@@ -23,11 +23,22 @@ jobs:
       - name: Build addon
         run: npm run build
 
+      - name: Zip and rename bundle.js to bundle.xpi
+        run: |
+          zip -r bundle.xpi bundle.js
+          mv bundle.xpi my_extension.xpi
+
       - name: Upload Extension Artifact
         uses: actions/upload-artifact@v2
         with:
           name: firefox-extension
-          path: path/to/my_extension.xpi # Update this path
+          path: my_extension.xpi 
+
+      - name: Upload Extension Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: firefox-extension
+          path: my_extension.xpi # Update this path
 
       - name: Set Jest Permissions
         run: chmod +x ./node_modules/.bin/jest
