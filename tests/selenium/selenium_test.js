@@ -29,7 +29,7 @@ console.log('XPI Path:', process.env.XPI_PATH); // Log the path to the .xpi file
 	.setFirefoxService(serviceBuilder) // Ensure the serviceBuilder is correctly utilized
 	.build();
   try {
-	// Your test code here
+    await driver.get('https://example.com');
   } finally {
 	await driver.quit();
   }
