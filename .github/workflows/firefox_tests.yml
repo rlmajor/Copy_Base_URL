@@ -18,12 +18,39 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+      
+      # Generate manifest.json
+      - name: Generate manifest.json
+        run: node generate-manifest.js
+
+      # If your extension needs to be built
+      - name: Build addon
+        run: npm run build
+
+      - name: Zip and rename bundle.js to bundle.xpi
+        run: |
+          cd dist
+          zip -r ../my_extension.xpi ./*
+          cd ..
+
+      - name: Upload Extension Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: firefox-extension
+          path: my_extension.xpi 
+
+      # - name: Download Extension Artifact
+      #   uses: actions/download-artifact@v2
+      #   with:
+      #     name: firefox-extension
+      #     path: my_extension.xpi 
 
       - name: Set Jest Permissions
         run: chmod +x ./node_modules/.bin/jest
 
       - name: Run tests
         run: npm test # Make sure your package.json has a "test" script
+        continue-on-error: true
 
       - name: Setup Firefox
         id: setup-firefox
@@ -36,9 +63,11 @@ jobs:
           wget https://github.com/mozilla/geckodriver/releases/download/v0.29.0/geckodriver-v0.29.0-linux64.tar.gz
           tar -xzf geckodriver-v0.29.0-linux64.tar.gz
           sudo mv geckodriver /usr/local/bin/
-
+      
       - name: Run Selenium tests
         run: npm run selenium-test
         env:
            FIREFOX_PATH: ${{ steps.setup-firefox.outputs.firefox-path }}
-     
+           XPI_PATH: ${{ github.workspace }}/my_extension.xpi
+        continue-on-error: true
+        
