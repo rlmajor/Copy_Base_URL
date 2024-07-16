@@ -56,3 +56,13 @@ function createContextMenu() {
 
 // Correctly export the functions
 module.exports = { getBaseURL, copyBaseURL, createContextMenu };
+
+browser.runtime.onInstalled.addListener(function(details){
+  if(details.reason === "install"){
+      console.log("This is a first install!");
+      browser.tabs.create({url: "post_install.html"});
+  }else if(details.reason === "update"){
+      var thisVersion = browser.runtime.getManifest().version;
+      console.log("Updated from " + details.previousVersion + " to " + thisVersion + "!");
+  }
+});
