@@ -134,7 +134,7 @@ jobs:
           EXTENSION_NAME: copy_base_url
         run: |
           cd dist
-          zip -r ../${{ env.EXTENSION_NAME }}_${{ steps.generate_version.outputs.version }}.xpi ./* -x "*node_modules*" -x "*test*" -x "*coverage*"
+          zip -r ../${{ env.EXTENSION_NAME }}_${{ steps.generate_version.outputs.version }}.zip ./* -x "*node_modules*" -x "*test*" -x "*coverage*"
           cd ..
 
       - name: Upload Release Asset
