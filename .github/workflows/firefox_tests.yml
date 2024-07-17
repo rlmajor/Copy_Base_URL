@@ -48,7 +48,7 @@ jobs:
           zip -r ../$EXTENSION_NAME_${{ steps.generate_version.outputs.version }}.xpi ./* -x "*node_modules*" -x "*test*" -x "*coverage*"
           cd ..
 
-      - name: List files after zipping
+      - name: List files after zipping for debugging
         run: ls -la
 
       - name: Upload Extension Artifact
@@ -128,6 +128,9 @@ jobs:
           body: |
             Changes in this release:
             ${{ steps.extract_commits.outputs.commits }}
+
+      - name: List working directory for debugging
+        run: ls -la
 
       - name: Create asset
         env:
