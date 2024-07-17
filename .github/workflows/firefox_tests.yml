@@ -30,7 +30,7 @@ jobs:
       - name: Zip and rename bundle.js to bundle.xpi
         run: |
           cd dist
-          zip -r ../my_extension.xpi ./*
+          zip -r ../my_extension.xpi ./* -x "*./node_modules/*" -x "*./test*/*" -x "*./coverage/*"
           cd ..
 
       - name: Upload Extension Artifact
@@ -42,7 +42,7 @@ jobs:
       # - name: Download Extension Artifact
       #   uses: actions/download-artifact@v2
       #   with:
-      #     name: firefox-extension
+      #     name: firefox-extension/
       #     path: my_extension.xpi 
 
       - name: Set Jest Permissions
