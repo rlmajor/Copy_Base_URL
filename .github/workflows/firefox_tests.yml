@@ -30,7 +30,7 @@ jobs:
       - name: Zip and rename bundle.js to bundle.xpi
         run: |
           cd dist
-          zip -r ../my_extension.xpi ./*
+          zip -r ../my_extension.xpi ./* -x "*node_modules*" -x "*test*" -x "*coverage*"
           cd ..
 
       - name: Upload Extension Artifact
