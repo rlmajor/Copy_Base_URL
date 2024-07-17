@@ -16,7 +16,7 @@ jobs:
         firefox: ['84.0', 'devedition-84.0b1', 'latest-beta', 'latest-devedition', 'latest-nightly', 'latest-esr', 'latest']
     name: Firefox ${{ matrix.firefox }} sample
     env:
-      EXTENSION_NAME: my_extension
+      EXTENSION_NAME: copy_base_url
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
