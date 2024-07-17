@@ -1,4 +1,9 @@
-on: [push]
+name: Build and Release - DEV
+
+on:
+  push:
+    branches:
+      - develop
 
 jobs:
   build:
@@ -7,6 +12,8 @@ jobs:
       matrix:
         firefox: ['84.0', 'devedition-84.0b1', 'latest-beta', 'latest-devedition', 'latest-nightly', 'latest-esr', 'latest']
     name: Firefox ${{ matrix.firefox }} sample
+    env:
+      EXTENSION_NAME: my_extension
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -14,42 +21,41 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '17' 
+          node-version: '17'
 
       - name: Install dependencies
         run: npm install
-      
-      # Generate manifest.json
+
       - name: Generate manifest.json
         run: node generate-manifest.js
 
-      # If your extension needs to be built
       - name: Build addon
         run: npm run build
+
+      - name: Generate version
+        id: generate_version
+        run: |
+          version=$(date +'%Y%m%d%H%M%S')
+          echo "Version: $version"
+          echo "::set-output name=version::$version"
 
       - name: Zip and rename bundle.js to bundle.xpi
         run: |
           cd dist
-          zip -r ../my_extension.xpi ./* -x "*node_modules*" -x "*test*" -x "*coverage*"
+          zip -r ../${{ env.EXTENSION_NAME }}_${{ steps.generate_version.outputs.version }}.xpi ./* -x "*node_modules*" -x "*test*" -x "*coverage*"
           cd ..
 
       - name: Upload Extension Artifact
         uses: actions/upload-artifact@v2
         with:
           name: firefox-extension
-          path: my_extension.xpi 
-
-      # - name: Download Extension Artifact
-      #   uses: actions/download-artifact@v2
-      #   with:
-      #     name: firefox-extension/
-      #     path: my_extension.xpi 
+          path: ${{ env.EXTENSION_NAME }}_${{ steps.generate_version.outputs.version }}.xpi
 
       - name: Set Jest Permissions
         run: chmod +x ./node_modules/.bin/jest
 
       - name: Run tests
-        run: npm test # Make sure your package.json has a "test" script
+        run: npm test
         continue-on-error: true
 
       - name: Setup Firefox
@@ -63,11 +69,61 @@ jobs:
           wget https://github.com/mozilla/geckodriver/releases/download/v0.29.0/geckodriver-v0.29.0-linux64.tar.gz
           tar -xzf geckodriver-v0.29.0-linux64.tar.gz
           sudo mv geckodriver /usr/local/bin/
-      
+
       - name: Run Selenium tests
         run: npm run selenium-test
         env:
-           FIREFOX_PATH: ${{ steps.setup-firefox.outputs.firefox-path }}
-           XPI_PATH: ${{ github.workspace }}/my_extension.xpi
+          FIREFOX_PATH: ${{ steps.setup-firefox.outputs.firefox-path }}
+          XPI_PATH: ${{ github.workspace }}/${{ env.EXTENSION_NAME }}_${{ steps.generate_version.outputs.version }}.xpi
         continue-on-error: true
-        
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    env:
+      EXTENSION_NAME: my_extension
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Download Extension Artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: firefox-extension
+          path: .
+
+      - name: Extract PR Commit Messages
+        id: extract_commits
+        run: |
+          commits=$(git log --merges -n 1 --pretty=format:"%h" | xargs -I % git log %^..% --pretty=format:"- %s")
+          echo "$commits"
+          echo "::set-output name=commits::$commits"
+
+      - name: Generate version
+        id: generate_version
+        run: |
+          version=$(date +'%Y%m%d%H%M%S')
+          echo "Version: $version"
+          echo "::set-output name=version::$version"
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.generate_version.outputs.version }}
+          release_name: Release ${{ steps.generate_version.outputs.version }}
+          body: |
+            Changes in this release:
+            ${{ steps.extract_commits.outputs.commits }}
+
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./${{ env.EXTENSION_NAME }}_${{ steps.generate_version.outputs.version }}.xpi
+          asset_name: ${{ env.EXTENSION_NAME }}_${{ steps.generate_version.outputs.version }}.xpi
+          asset_content_type: application/zip
