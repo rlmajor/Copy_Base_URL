@@ -1,4 +1,4 @@
-name: Build and Release - DEV
+name: Test and Build - DEV
 on:
   push:
     branches:
