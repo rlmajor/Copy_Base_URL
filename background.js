@@ -29,7 +29,8 @@ browser.contextMenus.create({
 // Add a listener for the context menu item click 
 browser.contextMenus.onClicked.addListener((info, tab) => {
   if (info.menuItemId === "copy-base-url") {
-    copyBaseURL(tab);
+    const baseURL = getBaseURL(tab.url); // Extract the base URL
+    copyBaseURL(baseURL); // Copy the base URL to the clipboard
   }
 });
 
@@ -39,7 +40,8 @@ browser.commands.onCommand.addListener((command) => {
     // Get the currently active tab
     browser.tabs.query({ active: true, currentWindow: true }).then((tabs) => {
       if (tabs.length > 0) {
-        copyBaseURL(tabs[0]);
+        const baseURL = getBaseURL(tabs[0].url); // Extract the base URL
+        copyBaseURL(baseURL); // Copy the base URL to the clipboard
       }
     });
   }
