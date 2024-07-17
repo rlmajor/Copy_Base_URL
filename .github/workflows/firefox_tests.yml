@@ -129,7 +129,7 @@ jobs:
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          EXTENSION_NAME: ${{ env.EXTENSION_NAME }}
+          EXTENSION_NAME: copy_base_url
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ${{ github.workspace }}/${{ env.EXTENSION_NAME }}_${{ steps.generate_version.outputs.version }}.xpi
