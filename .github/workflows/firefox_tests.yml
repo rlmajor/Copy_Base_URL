@@ -83,8 +83,6 @@ jobs:
   release:
     needs: build
     runs-on: ubuntu-latest
-    env:
-      EXTENSION_NAME: my_extension
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
