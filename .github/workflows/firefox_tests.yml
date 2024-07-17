@@ -96,11 +96,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Download Extension Artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: firefox-extension
-          path: .
+      # - name: Download Extension Artifact
+      #   uses: actions/download-artifact@v2
+      #   with:
+      #     name: firefox-extension
+      #     path: .
 
       - name: Extract PR Commit Messages
         id: extract_commits
