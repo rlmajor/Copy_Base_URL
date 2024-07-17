@@ -76,7 +76,7 @@ jobs:
       - name: Define XPI Path
         id: define_xpi_path
         run: |
-          echo "::set-output name=xpi_path::./${{ env.EXTENSION_NAME }}_${{ steps.generate_version.outputs.version }}.xpi"
+          echo "::set-output name=xpi_path::${{ github.workspace }}/${{ env.EXTENSION_NAME }}_${{ steps.generate_version.outputs.version }}.xpi"
         continue-on-error: true
 
       - name: Run Selenium tests
