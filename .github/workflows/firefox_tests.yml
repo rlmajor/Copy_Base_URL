@@ -73,11 +73,17 @@ jobs:
           tar -xzf geckodriver-v0.29.0-linux64.tar.gz
           sudo mv geckodriver /usr/local/bin/
 
+      - name: Define XPI Path
+        id: define_xpi_path
+        run: |
+          echo "::set-output name=xpi_path::./${{ env.EXTENSION_NAME }}_${{ steps.generate_version.outputs.version }}.xpi"
+        continue-on-error: true
+
       - name: Run Selenium tests
         run: npm run selenium-test
         env:
           FIREFOX_PATH: ${{ steps.setup-firefox.outputs.firefox-path }}
-          XPI_PATH: ${{ github.workspace }}/${{ env.EXTENSION_NAME }}_${{ steps.generate_version.outputs.version }}.xpi
+          XPI_PATH: ${{ steps.define_xpi_path.outputs.xpi_path }}
         continue-on-error: true
 
   release:
@@ -106,6 +112,8 @@ jobs:
           version=$(date +'%Y%m%d%H%M%S')
           echo "Version: $version"
           echo "::set-output name=version::$version"
+
+          
 
       - name: Create Release
         id: create_release
