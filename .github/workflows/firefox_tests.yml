@@ -1,5 +1,4 @@
 name: Build and Release - DEV
-
 on:
   push:
     branches:
@@ -46,7 +45,7 @@ jobs:
       - name: Zip and rename bundle.js to bundle.xpi
         run: |
           cd dist
-          zip -r ../${{ env.EXTENSION_NAME }}_${{ steps.generate_version.outputs.version }}.xpi ./* -x "*node_modules*" -x "*test*" -x "*coverage*"
+          zip -r ../$EXTENSION_NAME_${{ steps.generate_version.outputs.version }}.xpi ./* -x "*node_modules*" -x "*test*" -x "*coverage*"
           cd ..
 
       - name: List files after zipping
@@ -81,7 +80,8 @@ jobs:
         id: define_xpi_path
         run: |
           xpi_path="${{ github.workspace }}/${{ env.EXTENSION_NAME }}_${{ steps.generate_version.outputs.version }}.xpi"
-          echo "::set-output name=xpi_path::$xpi_path"
+          echo "::set-output name=xpi_path::${{ github.workspace }}/${{ env.EXTENSION_NAME }}_${{ steps.generate_version.outputs.version }}.xpi"
+        continue-on-error: true
 
       - name: Run Selenium tests
         run: npm run selenium-test
@@ -97,11 +97,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Download Extension Artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: firefox-extension
-          path: .
+      # - name: Download Extension Artifact
+      #   uses: actions/download-artifact@v2
+      #   with:
+      #     name: firefox-extension
+      #     path: .
 
       - name: Extract PR Commit Messages
         id: extract_commits
@@ -128,6 +128,14 @@ jobs:
           body: |
             Changes in this release:
             ${{ steps.extract_commits.outputs.commits }}
+
+      - name: Create asset
+        env:
+          EXTENSION_NAME: copy_base_url
+        run: |
+          cd dist
+          zip -r ../${{ env.EXTENSION_NAME }}_${{ steps.generate_version.outputs.version }}.xpi ./* -x "*node_modules*" -x "*test*" -x "*coverage*"
+          cd ..
 
       - name: Upload Release Asset
         uses: actions/upload-release-asset@v1
