@@ -55,7 +55,7 @@ function createContextMenu() {
 }
 
 // Correctly export the functions
-export default { getBaseURL, copyBaseURL, createContextMenu };
+// export default { getBaseURL, copyBaseURL, createContextMenu };
 
 browser.runtime.onInstalled.addListener(function(details){
   if(details.reason === "install"){
