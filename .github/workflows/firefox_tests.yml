@@ -113,8 +113,6 @@ jobs:
           echo "Version: $version"
           echo "::set-output name=version::$version"
 
-          
-
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -134,6 +132,6 @@ jobs:
           EXTENSION_NAME: ${{ env.EXTENSION_NAME }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./${{ env.EXTENSION_NAME }}_${{ steps.generate_version.outputs.version }}.xpi
-          asset_name: ${{ env.EXTENSION_NAME }}_${{ steps.generate_version.outputs.version }}.xpi
+          asset_path: ${{ github.workspace }}//${{ env.EXTENSION_NAME }}_${{ steps.generate_version.outputs.version }}.xpi
+          asset_name: ${{ github.workspace }}/${{ env.EXTENSION_NAME }}_${{ steps.generate_version.outputs.version }}.xpi
           asset_content_type: application/zip
