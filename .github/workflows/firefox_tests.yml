@@ -7,6 +7,9 @@ on:
 permissions:
   contents: write
 
+env:
+  EXTENSION_NAME: copy_base_url
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -14,8 +17,6 @@ jobs:
       matrix:
         firefox: ['84.0', 'devedition-84.0b1', 'latest-beta', 'latest-devedition', 'latest-nightly', 'latest-esr', 'latest']
     name: Firefox ${{ matrix.firefox }} sample
-    env:
-      EXTENSION_NAME: copy_base_url
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -46,7 +47,7 @@ jobs:
           cd dist
           zip -r ../$EXTENSION_NAME_${{ steps.generate_version.outputs.version }}.xpi ./* -x "*node_modules*" -x "*test*" -x "*coverage*"
           cd ..
-          
+
       - name: List files after zipping
         run: ls -la
 
@@ -78,6 +79,7 @@ jobs:
       - name: Define XPI Path
         id: define_xpi_path
         run: |
+          xpi_path="${{ github.workspace }}/${{ env.EXTENSION_NAME }}_${{ steps.generate_version.outputs.version }}.xpi"
           echo "::set-output name=xpi_path::${{ github.workspace }}/${{ env.EXTENSION_NAME }}_${{ steps.generate_version.outputs.version }}.xpi"
         continue-on-error: true
 
@@ -87,7 +89,6 @@ jobs:
           FIREFOX_PATH: ${{ steps.setup-firefox.outputs.firefox-path }}
           XPI_PATH: ${{ steps.define_xpi_path.outputs.xpi_path }}
         continue-on-error: true
-        
 
   release:
     needs: build
@@ -140,9 +141,8 @@ jobs:
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          EXTENSION_NAME: copy_base_url
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ env.EXTENSION_NAME }}_${{ steps.generate_version.outputs.version }}.xpi
+          asset_path: ${{ github.workspace }}/${{ env.EXTENSION_NAME }}_${{ steps.generate_version.outputs.version }}.xpi
           asset_name: ${{ env.EXTENSION_NAME }}_${{ steps.generate_version.outputs.version }}.xpi
           asset_content_type: application/zip
